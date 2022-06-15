@@ -22,6 +22,8 @@ const NewsLetter = () => {
         onSubmit:(values,{ resetForm })=>{
             setLoading(true)
             console.log(values)
+
+            /////
         }
     })
 
