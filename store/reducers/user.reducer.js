@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
+import {
+    registerUser
+} from '../actions/user.action';
+
 
 const DEFAULT_STATE = {
     loading:false,
@@ -16,7 +20,23 @@ const DEFAULT_STATE = {
 export const userSlice =  createSlice({
     name:'user',
     initialState:DEFAULT_STATE,
-    reducers:{}
+    reducers:{
+
+    },
+    extraReducers:(builder)=>{
+        builder
+        .addCase(registerUser.pending,(state)=>{
+            state.loading = true;
+        })
+        .addCase(registerUser.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.data = action.payload;
+            state.auth = true;
+        })
+        .addCase(registerUser.rejected,(state)=>{
+            state.loading = false;
+        })
+    }
 });
 
 export default userSlice.reducer;

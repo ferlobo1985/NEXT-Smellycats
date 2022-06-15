@@ -10,10 +10,13 @@ import Box from "@mui/material/Box";
 import { errorHelper } from "helpers/functions";
 import Loader from "helpers/loader";
 
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { registerUser } from 'store/actions/user.action'
 
 const SignIn = () => {
   const [formType, setFormType] = useState(false);
+  const user = useSelector(state=> state.user)
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const formik = useFormik({
@@ -32,13 +35,7 @@ const SignIn = () => {
   const submitForm = (values) => {
     if (formType) {
       // register
-      axios.post('/api/auth/register',values)
-      .then( response => {
-        console.log(response.data)
-      }).catch(error=>{
-        console.log(error)
-      })
-      
+      dispatch(registerUser({values,router}))
     } else {
       // sign in
       console.log(values, "sign in");
@@ -79,6 +76,9 @@ const SignIn = () => {
             {...errorHelper(formik, "password")}
           />
 
+          { user.loading ?
+            <Loader/>
+          :
           <div className="mb-3 si-btns">
             <Button
               variant="contained"
@@ -101,6 +101,7 @@ const SignIn = () => {
                 }
             </Button>
           </div>
+          }
         </Box>
       </>
     </div>
