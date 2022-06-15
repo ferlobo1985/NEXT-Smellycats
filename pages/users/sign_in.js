@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import { errorHelper } from "helpers/functions";
 import Loader from "helpers/loader";
 
+import axios from 'axios';
+
 const SignIn = () => {
   const [formType, setFormType] = useState(false);
   const router = useRouter();
@@ -30,7 +32,13 @@ const SignIn = () => {
   const submitForm = (values) => {
     if (formType) {
       // register
-      console.log(values, "register");
+      axios.post('/api/auth/register',values)
+      .then( response => {
+        console.log(response.data)
+      }).catch(error=>{
+        console.log(error)
+      })
+      
     } else {
       // sign in
       console.log(values, "sign in");
