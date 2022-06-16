@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -13,7 +13,10 @@ import Loader from "helpers/loader";
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser, signInUser } from 'store/actions/user.action'
 
+import { getSession } from 'next-auth/react';
+
 const SignIn = () => {
+  const [check,setCheck] = useState(true) /// check session 
   const [formType, setFormType] = useState(false);
   const user = useSelector(state=> state.user)
   const dispatch = useDispatch();
@@ -46,8 +49,20 @@ const SignIn = () => {
     setFormType(!formType);
   };
 
+  useEffect(()=>{
+    getSession().then(session=>{
+      if(session){
+        router.push('/users/dashboard')
+      } else {
+        setCheck(false)
+      }
+    })
+  },[])
+
+
   return (
     <div className="container full_vh small top-space">
+      { !check ?
       <>
         <h1>{formType ? "Register" : "Sign in"}</h1>
         <Box
@@ -104,6 +119,9 @@ const SignIn = () => {
           }
         </Box>
       </>
+      :
+          <Loader/>
+      }
     </div>
   );
 };

@@ -5,6 +5,7 @@ import {
     autoSignIn
 } from '../actions/user.action';
 
+import { signOut } from 'next-auth/react'
 
 const DEFAULT_STATE = {
     loading:false,
@@ -23,7 +24,12 @@ export const userSlice =  createSlice({
     name:'user',
     initialState:DEFAULT_STATE,
     reducers:{
+        signOutUser:(state)=>{
+            signOut({redirect:false});
 
+            state.data = DEFAULT_STATE.data
+            state.auth = false;
+        }
     },
     extraReducers:(builder)=>{
         builder
@@ -59,4 +65,5 @@ export const userSlice =  createSlice({
     }
 });
 
+export const { signOutUser } =  userSlice.actions
 export default userSlice.reducer;
