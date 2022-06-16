@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { errorGlobal, successGlobal } from '../reducers/notifications.reducer';
 
 import { signIn } from 'next-auth/react'
 import axios from 'axios';
+
+
 
 export const registerUser = createAsyncThunk(
     'user/registerUser',
@@ -16,12 +19,12 @@ export const registerUser = createAsyncThunk(
                 password:values.password
             });
 
-
-            console.log('WELCOME !!!!')
+            dispatch(successGlobal('Welcome !!!'))
             router.push('/users/dashboard')
             return user.data
         } catch(error){
-            console.log(error.response.data.message)
+            console.log(error)
+            dispatch(errorGlobal(error.response.data.message))
             throw error;
         }
     }

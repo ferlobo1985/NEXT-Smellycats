@@ -4,8 +4,23 @@ import { useRouter } from "next/router";
 
 import { Navbar,Container, Nav } from 'react-bootstrap';
 
+import { useSelector,useDispatch } from "react-redux";
+import { clearNotification } from 'store/reducers/notifications.reducer';
+
+
 const Header = () => {
-    const router = useRouter()
+    const router = useRouter();
+    const notifications = useSelector(state => state.notifications);
+
+    useEffect(()=>{
+        let { global } = notifications;
+        if(notifications && global.error ){
+            const msg = global.msg ? global.msg : 'Error';
+           // showToast('ERROR',msg)
+
+        }
+
+    },[notifications])
 
     return(
         <Navbar bg="dark" variant="dark">
