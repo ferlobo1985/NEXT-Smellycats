@@ -25,10 +25,16 @@ const CreateShowPage = () => {
         initialValues:showFiels,
         validationSchema:showValidation,
         onSubmit:(values,{ resetForm })=>{
-            //setLoading(true)
+            setLoading(true)
 
-            //// post 
-            console.log(values)
+            axios.post("/api/shows/add_show",values)
+            .then( response =>{
+                console.log(response.data)
+            }).catch(error=>{
+                dispatch(errorGlobal(error.response.data.message))
+            }).finally(()=>{
+                setLoading(false)
+            });
         }
     })
 
