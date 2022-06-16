@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
     registerUser,
-    signInUser
+    signInUser,
+    autoSignIn
 } from '../actions/user.action';
 
 
@@ -49,6 +50,11 @@ export const userSlice =  createSlice({
         })
         .addCase(signInUser.rejected,(state)=>{
             state.loading = false;
+        })
+        //// AUTO SIGN IN
+        .addCase(autoSignIn.fulfilled,(state,action)=>{
+            state.data = action.payload;
+            state.auth = true;
         })
     }
 });

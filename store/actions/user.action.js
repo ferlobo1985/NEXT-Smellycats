@@ -57,3 +57,20 @@ export const signInUser = createAsyncThunk(
         }
     }
 )
+
+
+
+
+
+export const autoSignIn = createAsyncThunk(
+    'user/autoSignIn',
+    async(obj,{ dispatch })=>{
+        try{
+            const user = await axios.get('/api/users/user');
+            return user.data;
+        } catch(error){
+            dispatch(errorGlobal(error.response.data.message))
+            throw error
+        }
+    }
+)
