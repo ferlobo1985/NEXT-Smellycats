@@ -28,8 +28,10 @@ const CreateShowPage = () => {
             setLoading(true)
 
             axios.post("/api/shows/add_show",values)
-            .then( response =>{
-                console.log(response.data)
+            .then( ()=>{
+                dispatch(successGlobal('Done, congrats !!'))
+                ///// image
+                resetForm();
             }).catch(error=>{
                 dispatch(errorGlobal(error.response.data.message))
             }).finally(()=>{

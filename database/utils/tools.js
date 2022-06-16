@@ -14,6 +14,15 @@ export const passwordCheck = async(password,hashedPassword) =>{
     return valid;
 }
 
+export const validateBody = async(validation, data)=>{
+    try{
+        await validation.validate(data,{abortEarly:false});
+        return true;
+    } catch(error) {
+        return false
+    }
+}
+
 export const checkRole = async(req,rights)=>{
     const user = await findUserByEmail(req.session.user.email);
     if(!user){
