@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React,{ useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 
-const UploadHandler = () => {
+const UploadHandler = (props) => {
     const imageInputRef = React.useRef();
     const [createObjectURL,setCreateObjectURL] = useState(null)
 
@@ -21,7 +21,7 @@ const UploadHandler = () => {
 
         try{
             const request = await axios.post("/api/uploads/image",body);
-            console.log(request.data)
+            props.picValue(request.data.filename)
         } catch(error){
             console.log(error)
         }

@@ -41,6 +41,9 @@ const CreateShowPage = () => {
         }
     })
 
+    const handlePicValue = (src) => {
+        formik.setFieldValue("image",src)
+    }
 
 
     return(
@@ -55,7 +58,9 @@ const CreateShowPage = () => {
                 onSubmit={formik.handleSubmit}
             >
 
-                <UploadHandler/>
+                <UploadHandler
+                    picValue={(src)=>handlePicValue(src)}
+                />
                 
                 <Divider className='mt-3 mb-3'/>
 
