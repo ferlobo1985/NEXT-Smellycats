@@ -21,9 +21,9 @@ export const registerUser = createAsyncThunk(
 
             dispatch(successGlobal('Welcome !!!'))
             router.push('/users/dashboard')
+            
             return user.data
         } catch(error){
-            console.log(error)
             dispatch(errorGlobal(error.response.data.message))
             throw error;
         }

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import { Navbar,Container, Nav } from 'react-bootstrap';
 
+import { showToast } from 'helpers/functions'
 import { useSelector,useDispatch } from "react-redux";
 import { clearNotification } from 'store/reducers/notifications.reducer';
 
@@ -11,15 +12,20 @@ import { clearNotification } from 'store/reducers/notifications.reducer';
 const Header = () => {
     const router = useRouter();
     const notifications = useSelector(state => state.notifications);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         let { global } = notifications;
         if(notifications && global.error ){
             const msg = global.msg ? global.msg : 'Error';
-           // showToast('ERROR',msg)
-
+            showToast('ERROR',msg);
+            dispatch(clearNotification())
         }
-
+        if(notifications && global.success ){
+            const msg = global.msg ? global.msg : 'Good!';
+            showToast('SUCCESS',msg);
+            dispatch(clearNotification())
+        }
     },[notifications])
 
     return(
