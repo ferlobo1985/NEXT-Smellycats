@@ -11,7 +11,7 @@ import { errorHelper } from "helpers/functions";
 import Loader from "helpers/loader";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { registerUser } from 'store/actions/user.action'
+import { registerUser, signInUser } from 'store/actions/user.action'
 
 const SignIn = () => {
   const [formType, setFormType] = useState(false);
@@ -38,7 +38,7 @@ const SignIn = () => {
       dispatch(registerUser({values,router}))
     } else {
       // sign in
-      console.log(values, "sign in");
+      dispatch(signInUser({values,router}))
     }
   };
 
