@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { signIn } from 'next-auth/react'
 import axios from 'axios';
 
 export const registerUser = createAsyncThunk(
@@ -9,6 +10,11 @@ export const registerUser = createAsyncThunk(
             const user = await axios.post('/api/auth/register',values);
 
             //// SIGN IN CREDENTIALS
+            await signIn('credentials',{
+                redirect:false,
+                email:user.data.email,
+                password:values.password
+            });
 
 
             console.log('WELCOME !!!!')

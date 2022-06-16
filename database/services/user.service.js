@@ -5,3 +5,7 @@ export const userExists = async(email) => {
     if(checkUser) return true;
     return false
 }
+
+export const findUserByEmail = async(email,select) => {
+    return await User.findOne({email:email}).select(select)
+}
