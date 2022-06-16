@@ -21,6 +21,7 @@ import axios from 'axios';
 const CreateShowPage = () => {
     const [loading,setLoading] = useState(false);
     const dispatch = useDispatch();
+    const clearRef = useRef();
 
     const formik = useFormik({
         initialValues:showFiels,
@@ -31,7 +32,7 @@ const CreateShowPage = () => {
             axios.post("/api/shows/add_show",values)
             .then( ()=>{
                 dispatch(successGlobal('Done, congrats !!'))
-                ///// image
+                clearRef.current.clearPic();
                 resetForm();
             }).catch(error=>{
                 dispatch(errorGlobal(error.response.data.message))
@@ -44,7 +45,6 @@ const CreateShowPage = () => {
     const handlePicValue = (src) => {
         formik.setFieldValue("image",src)
     }
-
 
     return(
         <LayoutAdmin title="Create shows">
@@ -60,6 +60,7 @@ const CreateShowPage = () => {
 
                 <UploadHandler
                     picValue={(src)=>handlePicValue(src)}
+                    ref={clearRef}
                 />
                 
                 <Divider className='mt-3 mb-3'/>

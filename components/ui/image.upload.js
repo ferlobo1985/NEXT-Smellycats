@@ -1,10 +1,16 @@
 import axios from 'axios';
 import React,{ useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 
-const UploadHandler = (props) => {
+const UploadHandler = forwardRef((props,ref) => {
     const imageInputRef = React.useRef();
     const [createObjectURL,setCreateObjectURL] = useState(null)
 
+    useImperativeHandle(ref,()=>({
+        clearPic(){
+            imageInputRef.current.value = "";
+            setCreateObjectURL(null)
+        }
+    }))
 
     const showImage = (event) => {
         if(event.target.files && event.target.files[0]){
@@ -29,6 +35,7 @@ const UploadHandler = (props) => {
     }
 
 
+    
 
     return(
         <div className="file-uploader">
@@ -43,7 +50,7 @@ const UploadHandler = (props) => {
             </div>
         </div>
     )
-} 
+})
 
 
 
