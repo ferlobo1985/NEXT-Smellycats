@@ -47,12 +47,13 @@ export const signInUser = createAsyncThunk(
             //// GET REST OF USER DATA
             const user = await axios.get('/api/users/user');
 
-            console.log(user.data)
+            dispatch(successGlobal('Welcome !!!'))
+            router.push('/users/dashboard')
 
-            return {}
+            return user.data
         } catch(error){
-            console.log('errrrrorrr')
-           throw error
+            dispatch(errorGlobal(error.response.data.message))
+            throw error
         }
     }
 )
