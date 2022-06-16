@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import LayoutAdmin from "components/ui/layout.admin";
+import UploadHandler from 'components/ui/image.upload';
 
 import { useFormik } from 'formik';
 import { errorHelper } from 'helpers/functions';
@@ -54,8 +55,8 @@ const CreateShowPage = () => {
                 onSubmit={formik.handleSubmit}
             >
 
-                <span>IMAGE UPLOAD</span>
-
+                <UploadHandler/>
+                
                 <Divider className='mt-3 mb-3'/>
 
                 <TextField
