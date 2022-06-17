@@ -1,15 +1,25 @@
+import { useState } from "react";
+
 import LayoutAdmin from "components/ui/layout.admin";
 import connectToDb from "database/db";
 import { paginateShows } from 'database/services/show.service';
-import { toJson } from 'helpers/functions'
+import { toJson } from 'helpers/functions';
+import PaginateBlock from 'components/users/admin/paginate';
 
-const ShowsAdmin = (props) => {
 
-    console.log(props)
+
+const ShowsAdmin = ({shows}) => {
+    const [showsPag,setShowPag] = useState(shows);
+  
+
 
     return(
         <LayoutAdmin title="Shows">
-            shows
+            <div className="shows_table">
+                <PaginateBlock
+                    shows={showsPag}
+                />
+            </div>
         </LayoutAdmin>
     )
 }
