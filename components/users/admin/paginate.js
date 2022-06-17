@@ -7,9 +7,26 @@ import {
 import { useRouter } from 'next/router';
 
 const PaginateBlock = ({
-    shows
+    shows,
+    prev,
+    next
 }) => {
-    console.log(shows)
+    const router = useRouter();
+
+ //   console.log(shows)
+
+    const goToPrevPage = (page) => {
+        prev(page)
+    }
+
+    const goToNextPage = (page) => {
+        next(page)
+    }
+
+
+    const goToEdit = (slug) => {
+        router.push(`/users/dashboard/shows/${slug}`)
+    }
 
 
     return(
@@ -34,7 +51,7 @@ const PaginateBlock = ({
                             >Remove</td>
                              <td
                                 className='action_btn edit_btn'
-                                onClick={()=> alert('redirect to post')}
+                                onClick={()=> goToEdit(show.slug)}
                             >Edit</td>
                         </tr>
                     ))}
@@ -43,8 +60,8 @@ const PaginateBlock = ({
             <Pagination>
                 { shows.hasPrevPage ? 
                 <>
-                    <Pagination.Prev onClick={()=> alert('PREV PAGE')}/>
-                    <Pagination.Item onClick={()=> alert('PREV PAGE')}>
+                    <Pagination.Prev onClick={()=> goToPrevPage(shows.prevPage)}/>
+                    <Pagination.Item onClick={()=> goToPrevPage(shows.prevPage)}>
                         {shows.prevPage}
                     </Pagination.Item>
                 </>
@@ -52,10 +69,10 @@ const PaginateBlock = ({
                 <Pagination.Item active>{shows.page}</Pagination.Item>
                 { shows.hasNextPage ? 
                 <>
-                    <Pagination.Item onClick={()=> alert('NEXT PAGE')}>
+                    <Pagination.Item onClick={()=> goToNextPage(shows.nextPage)}>
                         {shows.nextPage}
                     </Pagination.Item>
-                    <Pagination.Next onClick={()=> alert('NEXT PAGE')}/>
+                    <Pagination.Next onClick={()=> goToNextPage(shows.nextPage)}/>
                 </>
                 :null} 
 

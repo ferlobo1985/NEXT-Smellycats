@@ -1,4 +1,8 @@
 import { useState } from "react";
+import axios from "axios";
+
+import { useDispatch } from "react-redux";
+import { errorGlobal, successGlobal } from 'store/reducers/notifications.reducer'
 
 import LayoutAdmin from "components/ui/layout.admin";
 import connectToDb from "database/db";
@@ -9,8 +13,25 @@ import PaginateBlock from 'components/users/admin/paginate';
 
 
 const ShowsAdmin = ({shows}) => {
+    const dispatch = useDispatch();
     const [showsPag,setShowPag] = useState(shows);
+    const limit = 3;
+    const [currentPage,setCurrentPage] = useState(1);
   
+
+    const goToPage = (page) => {
+        getShows({page:page,limit})
+        setCurrentPage(page);
+    }
+    
+    const getShows = (values) => {
+        axios.post("/api/shows/paginate",values)
+        .then( response => {
+            setShowPag(response.data)
+        }).catch(error=>{
+            dispatch(errorGlobal(error.response.data.message))
+        })
+    }
 
 
     return(
@@ -18,6 +39,10 @@ const ShowsAdmin = ({shows}) => {
             <div className="shows_table">
                 <PaginateBlock
                     shows={showsPag}
+                    prev={(page)=>goToPage(page)}
+                    next={(page)=>goToPage(page)}
+
+
                 />
             </div>
         </LayoutAdmin>
