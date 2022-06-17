@@ -47,3 +47,16 @@ export const removeById = async(id) => {
         throw error
     }
 }
+
+export const getBySlug = async(query) => {
+    try{
+        const show = await Show.find({slug:query.slug}).exec();
+        if(show.length <= 0){
+            return;
+        }
+        return show;
+    } catch(error){
+        throw error;
+    }
+
+}

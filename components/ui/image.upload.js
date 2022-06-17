@@ -35,6 +35,14 @@ const UploadHandler = forwardRef((props,ref) => {
     }
 
 
+    //// edit ///
+    useEffect(()=>{
+        if(props.prevImage){
+            setCreateObjectURL(`/images/venues/uploads/${props.prevImage}`)
+        }
+    },[])
+    /// edit ///
+
     
 
     return(
