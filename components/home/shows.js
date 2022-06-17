@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Button from "@mui/material/Button";
 
-const Shows = () => {
+const Shows = ({shows}) => {
 
     return(
         <>
@@ -32,12 +32,13 @@ const Shows = () => {
                 <div className="container-fluid p-0">
                     <div className="row g-0">
 
-                        <div className="col-md-4 col-sm-12" key="1">
-                            <Link href={`/show/the_slug`}>
+                        { shows.map(show=>(
+                            <div className="col-md-4 col-sm-12" key={show._id}>
+                            <Link href={`/show/${show.slug}`}>
                                 <a className="event-box">
                                     <Image
-                                        src={`/images/venues/uploads/na.jpg`}
-                                        alt="pic"
+                                        src={`/images/venues/uploads/${show.image}`}
+                                        alt={show.title}
                                         width="1920"
                                         height="1080"
                                         layout="responsive"
@@ -45,64 +46,18 @@ const Shows = () => {
                                     />
                                     <div className="event-box-caption">
                                         <div className="project-category text-white-50">
-                                            13-23-22
+                                            {show.date}
                                         </div>
                                         <div className="project-name">
-                                            the vanue name
+                                            {show.venue}
                                         </div>
                                     </div>
                                 </a>
                             </Link>
                         </div>
+                        ))}
+                        
 
-
-                        <div className="col-md-4 col-sm-12" key="2">
-                            <Link href={`/show/the_slug`}>
-                                <a className="event-box">
-                                    <Image
-                                        src={`/images/venues/uploads/na.jpg`}
-                                        alt="pic"
-                                        width="1920"
-                                        height="1080"
-                                        layout="responsive"
-                                        className="img-fluid"
-                                    />
-                                    <div className="event-box-caption">
-                                        <div className="project-category text-white-50">
-                                            13-23-22
-                                        </div>
-                                        <div className="project-name">
-                                            the vanue name
-                                        </div>
-                                    </div>
-                                </a>
-                            </Link>
-                        </div>
-
-
-
-                        <div className="col-md-4 col-sm-12" key="3">
-                            <Link href={`/show/the_slug`}>
-                                <a className="event-box">
-                                    <Image
-                                        src={`/images/venues/uploads/na.jpg`}
-                                        alt="pic"
-                                        width="1920"
-                                        height="1080"
-                                        layout="responsive"
-                                        className="img-fluid"
-                                    />
-                                    <div className="event-box-caption">
-                                        <div className="project-category text-white-50">
-                                            13-23-22
-                                        </div>
-                                        <div className="project-name">
-                                            the vanue name
-                                        </div>
-                                    </div>
-                                </a>
-                            </Link>
-                        </div>
 
 
                     </div>

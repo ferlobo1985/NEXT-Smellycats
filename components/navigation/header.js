@@ -37,7 +37,7 @@ const Header = () => {
                 <Link href="/">The smelly cats</Link>
             </Navbar.Brand>
             <Nav className="ml-auto">
-                <Link href="/show" passHref>
+                <Link href="/shows" passHref>
                     <Nav.Link>Shows</Nav.Link>
                 </Link>
 

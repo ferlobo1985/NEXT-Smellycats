@@ -74,3 +74,18 @@ export const updateBySlug = async(slug,body) => {
         throw error
     }
 }
+
+export const getAllShows = async(sortBy,order,limit,skip)=>{
+    try {
+        const shows = await Show.find({})
+        .sort([
+            [sortBy,order]
+        ])
+        .skip(parseInt(skip))
+        .limit(parseInt(limit))
+
+        return shows;
+    } catch(error){
+        throw error
+    }
+}
