@@ -15,6 +15,7 @@ import {
     errorGlobal,
     successGlobal
 } from 'store/reducers/notifications.reducer'
+import axios from "axios";
 
 const Contact = () => {
     const [loading,setLoading] = useState(false);
@@ -31,8 +32,16 @@ const Contact = () => {
         }),
         onSubmit:(values,{resetForm})=>{
             setLoading(true);
-            console.log(values)
-
+            
+            axios.post('/api/email/contact',values)
+            .then(()=>{
+                dispatch(successGlobal('Thank you!!'))
+            }).catch(error=>{
+                dispatch(errorGlobal('Error try later'))
+            }).finally(()=>{
+                resetForm();
+                setLoading(false)
+            })
         }
     })
 
