@@ -26,7 +26,7 @@ const CardComponent = ({show}) => {
                 </CardContent>
 
                 <CardActions>
-                    <Link href={`/show/${show.slug}`}>
+                    <Link href={`/shows/${show.slug}`}>
                         <Button
                             variant='outlined'
                             color='primary'
