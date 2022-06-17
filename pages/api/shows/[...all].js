@@ -7,7 +7,8 @@ import {
     addShow,
     paginateShows,
     removeById,
-    updateBySlug
+    updateBySlug,
+    getAllShows
 } from 'database/services/show.service'
 
 
@@ -97,7 +98,23 @@ handler.patch(
     }
 )
 
+handler.get(
+    "/api/shows/getAll",
+    async(req,res)=>{        
+        try{
+            await connectToDb();
+            const sortBy = req.query.sort ? req.query.sort : '_id';
+            const order = req.query.order ? req.query.order : 'desc';
+            const limit = req.query.limit ? req.query.limit : '6';
+            const skip = req.query.skip ? req.query.skip : '0';
 
+            const shows =  await getAllShows(sortBy,order,limit,skip);
+            res.status(200).json({shows:shows});
+        } catch(error){
+            res.status(400).json({message:'Try again later',error:error})
+        }
+    }
+)
 
 
 

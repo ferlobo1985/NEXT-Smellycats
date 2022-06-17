@@ -7,8 +7,12 @@ import { toJson } from 'helpers/functions'
 import Masonry from 'react-masonry-css';
 import CardComponent from "components/ui/card";
 
+import { Button } from "@mui/material";
+import axios from "axios";
+
 const ShowsPage = (props) => {
-    const [shows,setShow] = useState(props.shows)
+    const [noMore, setNoMore] = useState(false);
+    const [shows,setShow] = useState(props.shows);
     const breakpointColumnsObj = {
         default: 3,
         1100: 3,
@@ -16,6 +20,24 @@ const ShowsPage = (props) => {
         500: 1
       };
       
+      const loadMorePosts = () => {
+        const skip = shows.length;
+
+        axios.get(`/api/shows/getAll?limit=3&skip=${skip}`)
+        .then( response => {
+            const newState = [
+                ...shows,
+                ...response.data.shows
+            ]
+            setShow(newState);
+            if(response.data.shows.length <= 0 ){
+                setNoMore(true)
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+      }
 
     return(
         <div className="container page_container">
@@ -31,6 +53,16 @@ const ShowsPage = (props) => {
                     />
                ))}
             </Masonry>
+
+            { !noMore && 
+            <Button
+                variant="contained"
+                onClick={loadMorePosts}
+            >
+                Load more
+            </Button>
+            }
+
         </div>
     )
 }
