@@ -48,5 +48,7 @@ const showSchema = new mongoose.Schema({
     }
 })
 
+
+showSchema.plugin(aggregatePaginate);
 const Show = mongoose.models.Show || mongoose.model('Show',showSchema)
 export default Show;

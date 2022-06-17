@@ -21,3 +21,18 @@ export const addShow = async(req) => {
         throw error;
     }
 }
+
+export const paginateShows = async(page,limit) => {
+    try{
+        const options = {
+            page,
+            limit,
+            sort:{ _id:'desc'}
+        }
+
+        const shows = await Show.aggregatePaginate({},options);
+        return shows
+    } catch(error){
+        throw error
+    }   
+}
