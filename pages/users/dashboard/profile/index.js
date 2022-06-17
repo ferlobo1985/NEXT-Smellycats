@@ -11,7 +11,7 @@ import { errorHelper } from "helpers/functions";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { successGlobal, errorGlobal } from "store/reducers/notifications.reducer";
-
+import { updateUserProfile } from 'store/reducers/user.reducer';
 
 const UserProfile = () => {
     const user = useSelector(state=>state.user);
@@ -34,10 +34,10 @@ const UserProfile = () => {
             .max(150,"50 char min"),
         }),
         onSubmit: (values) => {
-           
             axios
             .patch("/api/users/user",values)
             .then(response=>{
+                dispatch(updateUserProfile(response.data))
                 dispatch(successGlobal('Updated!!'))
             })
             .catch(error=>{

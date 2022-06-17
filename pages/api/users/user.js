@@ -2,7 +2,7 @@ import connectToDb from "database/db";
 import nc from 'next-connect';
 import checkAuth from 'database/middleware/checkauth'
 
-import { findUserByEmail } from 'database/services/user.service'
+import { findUserByEmail,updateUser } from 'database/services/user.service'
 
 const handler = nc();
 
@@ -26,8 +26,8 @@ handler
         }
 
         const id = user._id;
-        const newUser = 
-
+        const newUser = await updateUser(id,req.body);
+        res.status(200).json(newUser)
     } catch(error){
         res.status(400).json({message:error.message})
     }

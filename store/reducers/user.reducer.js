@@ -24,6 +24,10 @@ export const userSlice =  createSlice({
     name:'user',
     initialState:DEFAULT_STATE,
     reducers:{
+        updateUserProfile:(state,action)=>{
+            state.data.firstname = action.payload.firstname;
+            state.data.lastname = action.payload.lastname;
+        },
         signOutUser:(state)=>{
             signOut({redirect:false});
 
@@ -65,5 +69,5 @@ export const userSlice =  createSlice({
     }
 });
 
-export const { signOutUser } =  userSlice.actions
+export const { signOutUser,updateUserProfile } =  userSlice.actions
 export default userSlice.reducer;
