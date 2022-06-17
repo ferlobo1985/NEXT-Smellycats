@@ -6,7 +6,8 @@ import { checkRole } from 'database/utils/tools'
 import {
     addShow,
     paginateShows,
-    removeById
+    removeById,
+    updateBySlug
 } from 'database/services/show.service'
 
 
@@ -72,6 +73,31 @@ handler.delete(
         }
     }
 )
+
+
+handler.patch(
+    "/api/shows/edit",
+    checkAuth,
+    async(req,res)=>{        
+        try{
+            await connectToDb();
+
+            /// permission
+            const permission = await checkRole(req,['updateAny','shows']);
+            if(!permission){
+                return res.status(401).json({message:'Unauthorized'})
+            }
+
+            const slug = req.body.current;
+            const show = await updateBySlug(slug,req.body.data);
+            res.status(200).json(show);
+        } catch(error){
+            res.status(400).json({message:error.message})
+        }
+    }
+)
+
+
 
 
 

@@ -60,3 +60,17 @@ export const getBySlug = async(query) => {
     }
 
 }
+
+export const updateBySlug = async(slug,body) => {
+    try{
+        const show = await Show.findOneAndUpdate(
+            { slug:slug },
+            { "$set":body },
+            { new:true }
+        );
+        if(!show) throw new Error('No show found');
+        return show;
+    } catch(error){
+        throw error
+    }
+}

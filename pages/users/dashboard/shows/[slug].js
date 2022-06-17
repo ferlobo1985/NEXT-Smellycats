@@ -45,15 +45,26 @@ const EditShowPage = ({show}) => {
             image:show.image,
             date:show.date,
             time:show.time
-
         },
         validationSchema:showValidation,
         onSubmit:(values,{ resetForm })=>{
             setLoading(true)
             /// edit //
-
-            
-
+            axios
+            .patch("/api/shows/edit",{
+                data: values,
+                current: show.slug
+            })
+            .then(response => {
+                if(response.data.slug !== router.query.slug){
+                    router.push(`/users/dashboard/shows/${response.data.slug}`)
+                }                    
+                dispatch(successGlobal('Edited !!'))
+            }).catch( error => {
+                dispatch(errorGlobal(error.response.data.message))
+            }).finally(()=>{
+                setLoading(false)
+            })
             /// edit ///
         }
     })
@@ -175,7 +186,7 @@ const EditShowPage = ({show}) => {
                         color="primary"
                         type="submit"
                     >
-                        Create show
+                        Edit show
                     </Button>
                 }
             </Box>
