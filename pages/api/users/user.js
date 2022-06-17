@@ -17,6 +17,21 @@ handler
         res.status(400).json({message:'oops somethig wrong'});
     }
 })
+.patch(async(req,res)=>{
+    try{
+        await connectToDb();
+        const user = await findUserByEmail(req.session.user.email,{password:0})
+        if(!user){
+            return res.status(400).json({message:'No user found'})
+        }
+
+        const id = user._id;
+        const newUser = 
+
+    } catch(error){
+        res.status(400).json({message:error.message})
+    }
+})
 
 
 export default handler;
