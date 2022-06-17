@@ -8,9 +8,13 @@ import Button from '@mui/material/Button';
 import { errorHelper } from 'helpers/functions';
 import Loader from 'helpers/loader';
 
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { errorGlobal, successGlobal } from 'store/reducers/notifications.reducer'
 
 const NewsLetter = () => {
     const [loading,setLoading] = useState(false);
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues:{ email:''},
@@ -21,9 +25,16 @@ const NewsLetter = () => {
         }),
         onSubmit:(values,{ resetForm })=>{
             setLoading(true)
-            console.log(values)
 
-            /////
+            axios.post(`/api/users/newsletter`,values)
+            .then(()=>{
+                dispatch(successGlobal('Thank you'))
+            }).catch(error=>{
+                dispatch(errorGlobal(error.response.data.message))
+            }).finally(()=>{
+                resetForm();
+                setLoading(false)
+            })
         }
     })
 
