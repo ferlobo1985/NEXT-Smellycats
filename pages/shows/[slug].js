@@ -1,10 +1,12 @@
 import Image from "next/image";
+import LatestShowsBlock from "components/ui/shows/latest-bottom-block";
+import YTFrame from "components/ui/shows/ytframe";
 
 import connectToDb from "database/db";
 import { getAllShows, getBySlug } from 'database/services/show.service';
 import { toJson } from "helpers/functions";
 
-import YTFrame from "components/ui/shows/ytframe";
+
 
 const ShowArticle = ({show,latest}) =>{
 
@@ -29,6 +31,11 @@ const ShowArticle = ({show,latest}) =>{
                     <h3>Watch the full show</h3>
                     <YTFrame ytid={show.yt}/>
                 </div>  
+
+                <LatestShowsBlock
+                    shows={latest}
+                    title="Check out our latest shows"
+                />
 
             </div>
         </>
