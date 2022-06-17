@@ -17,6 +17,9 @@ const ShowsAdmin = ({shows}) => {
     const [showsPag,setShowPag] = useState(shows);
     const limit = 3;
     const [currentPage,setCurrentPage] = useState(1);
+
+    const [removeModal,setRemoveModal] = useState(false);
+    const [toRemove,setToRemove] = useState(null);
   
 
     const goToPage = (page) => {
@@ -33,6 +36,20 @@ const ShowsAdmin = ({shows}) => {
         })
     }
 
+    const handleClose = () => {
+        setToRemove('');
+        setRemoveModal(false)
+    }
+
+    const handleModal = (id) => {
+        setToRemove(id);
+        setRemoveModal(true)
+    }
+
+    const handleRemove = () => {
+        console.log('SERVER DELETE',toRemove)
+    }
+
 
     return(
         <LayoutAdmin title="Shows">
@@ -42,7 +59,11 @@ const ShowsAdmin = ({shows}) => {
                     prev={(page)=>goToPage(page)}
                     next={(page)=>goToPage(page)}
 
-
+                    removeModal={removeModal}
+                    handleClose={()=>handleClose()}
+                    handleModal={(id)=>handleModal(id)}
+                    handleRemove={()=>handleRemove()}
+                    
                 />
             </div>
         </LayoutAdmin>
