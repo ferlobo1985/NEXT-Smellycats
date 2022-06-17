@@ -8,8 +8,6 @@ import { toJson } from 'helpers/functions'
 
 const Home = (props) => {
 
-  console.log(props)
-
   return(
     <>
       <Featured/>
