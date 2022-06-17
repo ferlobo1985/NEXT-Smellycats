@@ -36,3 +36,14 @@ export const paginateShows = async(page,limit) => {
         throw error
     }   
 }
+
+
+export const removeById = async(id) => {
+    try{
+        const show = await Show.findByIdAndRemove(id);
+        if(!show) throw new Error('Sorry, no show found');
+        return show;
+    } catch(error){
+        throw error
+    }
+}

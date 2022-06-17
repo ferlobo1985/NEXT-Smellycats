@@ -20,7 +20,8 @@ const ShowsAdmin = ({shows}) => {
 
     const [removeModal,setRemoveModal] = useState(false);
     const [toRemove,setToRemove] = useState(null);
-  
+
+    console.log(showsPag)
 
     const goToPage = (page) => {
         getShows({page:page,limit})
@@ -47,7 +48,18 @@ const ShowsAdmin = ({shows}) => {
     }
 
     const handleRemove = () => {
-        console.log('SERVER DELETE',toRemove)
+        axios.delete('/api/shows/remove',{
+            data:{
+                id:toRemove
+            }
+        })
+        .then( response =>{
+            getShows({page:currentPage,limit});
+            dispatch(successGlobal('Removed !!'));
+            handleClose();
+        }).catch(error=>{
+            dispatch(errorGlobal(error.response.data.message))
+        })
     }
 
 
